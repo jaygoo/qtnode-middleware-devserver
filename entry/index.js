@@ -12,11 +12,9 @@ const app = express();
 
 
 module.exports = function (args) {
-    console.log(path.resolve(path.resolve(args.rootDir, 'wpconf/prod.js')));
-
     let opts = Object.assign({}, args);
     const packagejson = require(path.resolve(path.resolve(opts.rootDir, 'package.json')));
-    const prodconfig = require(path.resolve(path.resolve(opts.rootDir, 'wpconf/prod.js')));
+    const prodconfig = require(path.resolve(path.resolve(opts.rootDir, 'wpconf/dev.js')));
     const compiler = webpack(prodconfig);
     console.log(packagejson, prodconfig);
     return async function (next) {
@@ -37,10 +35,15 @@ module.exports = function (args) {
         // 使用静态资源目录，才能访问到/dist/idndex.html
         console.log(prodconfig.output.path);
         app.use(express.static(prodconfig.output.path))
+        app.use(()=> {
+            priter.tip("==================================");
+            priter.info(`devserver listening: http://localhost:${server.address()['port']}` );
+            priter.tip("==================================");
+        });
 
         // Serve the files on port 3000.
         const server = app.listen( ()=> {
-            console.info(`devserver listening: http://localhost:${server.address()['port']}` );
+            priter.tip(`devserver listening: http://localhost:${server.address()['port']}` );
         })
 
         next();

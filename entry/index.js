@@ -16,7 +16,6 @@ module.exports = function (args) {
     const packagejson = require(path.resolve(path.resolve(opts.rootDir, 'package.json')));
     const prodconfig = require(path.resolve(path.resolve(opts.rootDir, 'wpconf/dev.js')));
     const compiler = webpack(prodconfig);
-    console.log(packagejson, prodconfig);
     return async function (next) {
         priter.info("start dev");
 
@@ -33,17 +32,13 @@ module.exports = function (args) {
         // app.use(express.static(config.output.path))
 
         // 使用静态资源目录，才能访问到/dist/idndex.html
-        console.log(prodconfig.output.path);
         app.use(express.static(prodconfig.output.path))
-        app.use(()=> {
-            priter.tip("==================================");
-            priter.info(`devserver listening: http://localhost:${server.address()['port']}` );
-            priter.tip("==================================");
-        });
 
         // Serve the files on port 3000.
         const server = app.listen( ()=> {
-            priter.tip(`devserver listening: http://localhost:${server.address()['port']}` );
+            priter.tip("==================================");
+            priter.info(`devserver listening: http://localhost:${server.address()['port']}` );
+            priter.tip("==================================");
         })
 
         next();

@@ -13,15 +13,14 @@ const app = express();
 module.exports = function (args) {
     let opts = Object.assign({}, args);
     // const packagejson = require(path.resolve(path.resolve(opts.rootDir, 'package.json')));
-    const prodconfig = require(path.resolve(path.resolve(opts.rootDir, 'wpconf/dev.js')));
-    const compiler = webpack(prodconfig);
+    const prodconfig = require(path.resolve(path.resolve(opts.rootDir, './wpconf/dev.js')));
     let entry = prodconfig.entry;
-
     for (let key in entry ) {
         entry[key] = ['webpack-hot-middleware/client?noInfo=true&reload=true', entry[key]];
-
     }
     prodconfig.entry = entry;
+    const compiler = webpack(prodconfig);
+
     return async function (next) {
         priter.info('start dev');
 

@@ -11,16 +11,10 @@ env:
 
 extends: 'eslint:recommended'
 
-ecmaFeatures:
-  modules: true
-  experimentalObjectRestSpread: true
-
 parserOptions:
   ecmaVersion: 6
   sourceType": module
-  ecmaFeatures:
-    modules: true
-    experimentalObjectRestSpread: true
+
 
 rules:
   strict:
@@ -91,3 +85,6 @@ rules:
     - 2
   no-extra-boolean-cast:
     - 1
+  no-unused-vars:
+    - 2
+    - args: "none"

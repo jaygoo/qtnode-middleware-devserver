@@ -1,29 +1,17 @@
-lint:
-  - name: lint
-
-test:
-  - name: lint
-  - name: unit
-    env: node
-    timeout: 30000
-    files: ./test/**/*.test.js
+init:
+  - pkg: console
 
 dev:
-  - name: shell
-    script:
-      - node ./debug/index.js
+  - pkg: console
+  - middleware: devserver
 
 build:
-  - name: file-header
-    text: 
-      - 'Copyright (c) 2016-present Alibaba Group Holding Limited'
-      - '@author Houfeng <admin@xhou.net>'
-  - name: doc
+  - middleware: eslint
+  - middleware: mocha
+  - middleware: webpack
+
+test:
+  - middleware: eslint
+  - middleware: mocha
 
 publish:
-  - name: shell
-    script:
-      - dn test
-      - npm run coveralls
-      - dn build
-      - npm pu --registry=http://registry.npmjs.org

@@ -18,6 +18,8 @@ module.exports = function (args) {
     for (let key in entry ) {
         entry[key] = ['webpack-hot-middleware/client?noInfo=true&reload=true', entry[key]];
     }
+    prodconfig.plugins.push(new webpack.HotModuleReplacementPlugin());
+
     prodconfig.entry = entry;
     const compiler = webpack(prodconfig);
 

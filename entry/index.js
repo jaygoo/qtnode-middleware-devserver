@@ -17,7 +17,7 @@ module.exports = function (args) {
     const compiler = webpack(prodconfig);
     let entry = prodconfig.entry;
 
-    for (let {key} of entry ) {
+    for (let key in entry ) {
         entry[key] = ['webpack-hot-middleware/client?noInfo=true&reload=true', entry[key]];
 
     }
